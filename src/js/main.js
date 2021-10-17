@@ -351,12 +351,10 @@ class Anima {
             this.upd();
         }
 
-
         this.lastAnimation = timeNow;
     }
 
     setup() {
-
 
         // window.addEventListener('scroll', function (e) {
         //     e.preventDefault();
@@ -367,16 +365,9 @@ class Anima {
         document.addEventListener('touchmove', this.handleScroll, {passive: false} )
         document.addEventListener('touchstart', this.handleScroll, {passive: false} )
         document.addEventListener('touchend', this.handleScroll, {passive: false} )
-
-        // this.upd();
     }
 
     upd() {
-        // if(this.element.classList.length>1) {
-        //     let removed = Array.from(this.element.classList).slice(1);
-        //     this.element.classList.remove(removed);
-        // }
-        // this.element.classList.add('step-'+this.step);
         switch (this.step) {
             case 1:
                 break;

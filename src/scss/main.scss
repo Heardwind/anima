@@ -32,6 +32,17 @@ body {
   margin: 0;
 }
 
+// sizes
+$content_size: calc(100vh - 200px);
+$elem_size: calc(100vh - 200px);
+$elem_size_small: calc(100vh - 300px);
+
+$canvas: 250px;
+$main_spere: 100px;
+$item_sphere: 90px;
+$item_sphere_small: 60px;
+// sizes
+
 
 
 .anima {
@@ -44,9 +55,11 @@ body {
     position: absolute;
     left: 50%;
     top: 50%;
+    width: $canvas;
+    height: $canvas;
     transform: translate(-50%, -50%);
     filter: hue-rotate(0deg);
-    transition: transform .2s ease;
+    transition: all .2s ease;
   }
 
   .background, .sentinel, .cloudguard {
@@ -60,8 +73,8 @@ body {
   }
 
   .background .sphere {
-    height: 100px;
-    width: 100px;
+    height: $main_spere;
+    width: $main_spere;
     position: absolute;
     left: 50%;
     top: 50%;
@@ -70,10 +83,19 @@ body {
     background: radial-gradient(50% 50% at 50% 50%, rgba(1, 136, 245, 0) 46.87%, rgba(1, 136, 245, 0.263134) 67.71%, rgba(1, 136, 245, 0.646055) 81.25%, #0188F5 100%);
   }
 
-
-  // general
-
   .sentinel, .cloudguard {
+    .elems {
+      height: $elem_size;
+      width: $elem_size;
+    }
+
+    .elems .lines {
+      max-width: 100%;
+      max-height: 100%;
+      width: 100%;
+      height: 100%;
+    }
+
     .elems, .elems .logo {
       position: absolute;
       left: 50%;
@@ -97,52 +119,68 @@ body {
         white-space: nowrap;
       }
     }
+
+    .content {
+      height: $content_size;
+      width: $content_size;
+      position: absolute;
+      left: calc(50% - $content_size / 2);
+      top: calc(50% - $content_size / 2);
+    }
+
   }
 
   // general END
 
   .sentinel {
-    .sphere {
-      background: radial-gradient(50% 50% at 50% 50%, rgba(1, 136, 245, 0) 46.87%, rgba(1, 136, 245, 0.263134) 67.71%, rgba(1, 136, 245, 0.646055) 81.25%, #0188F5 100%);
-      height: 60px;
-      width: 60px;
+    .elems {
+      height: $elem_size_small;
+      width: $elem_size_small;
     }
 
-    .content {
-      width: 500px;
-      height: 500px;
-      margin: -250px 0 0 -250px;
+    .sphere {
+      background: radial-gradient(50% 50% at 50% 50%, rgba(1, 136, 245, 0) 46.87%, rgba(1, 136, 245, 0.263134) 67.71%, rgba(1, 136, 245, 0.646055) 81.25%, #0188F5 100%);
+      height: $item_sphere_small;
+      width: $item_sphere_small;
+      margin-left: 20%;
+    }
 
-      &:not(.rotate) {
+    .items {
         position: absolute;
+        top: calc(50% - $item_sphere_small / 2);
         left: 50%;
-        top: 50%;
-        transform: translate(-50%, -50%);
-        margin: 0;
-      }
+        transform: translate(-50%,-50%);
+        width: 100%;
 
       .item {
         position: absolute;
-        height: 60px;
-        width: 60px;
+        width: 100%;
 
         &:nth-child(1) {
-          left: calc(50% - 30px);
+          transform: rotate(90deg);
+
+          .sphere {
+            transform: rotate(-90deg);
+          }
 
           p {
-            top: -38px;
             bottom: auto;
+            top: -38px;
           }
         }
-
         &:nth-child(2) {
-          bottom: 130px;
-          left: 10px;
-        }
+          transform: rotate(210deg);
 
+          .sphere {
+            transform: rotate(-210deg);
+          }
+        }
         &:nth-child(3) {
-          bottom: 130px;
-          right: 10px;
+          transform: rotate(330deg);
+
+          .sphere {
+            transform: rotate(-330deg);
+          }
         }
       }
     }
@@ -157,10 +195,12 @@ body {
       transition: transform .4s ease;
       -webkit-transition: transform .4s ease;
     }
+
     .elems .logo, .content {
       opacity: 0;
       visibility: hidden;
     }
+
     .shine {
       position: absolute;
       left: 0;
@@ -169,16 +209,6 @@ body {
       top: 0;
       opacity: 0;
       background: radial-gradient(74.45% 74.45% at 50% 50%, rgba(0, 191, 191, 0.33) 0%, rgba(0, 191, 191, 0) 64.65%);
-    }
-
-    $container_width: 905px;
-
-    .content {
-      height: $container_width;
-      width: $container_width;
-      position: absolute;
-      left: calc(50% - $container_width/2);
-      top: calc(50% - $container_width/2);
     }
   }
 
@@ -225,7 +255,7 @@ body {
       list-style: none;
       color: #fff;
 
-      width: 705px;
+      width: 100%;
       transform: translate(-50%,-50%);
 
       transition: all .4s ease;
@@ -247,7 +277,7 @@ body {
 
         .bar {
           height: 10px;
-          width: 210px;
+          width: 30%;
           position: relative;
           .progress {
             display: block;
@@ -313,21 +343,23 @@ body {
 
         .sphere {
           background: radial-gradient(50% 50% at 50% 50%, rgba(0, 191, 191, 0) 12.5%, #00BFBF 99.48%);
-          width: 90px;
-          height: 90px;
+          width: $item_sphere;
+          height: $item_sphere;
           display: flex;
           align-items: center;
           justify-content: center;
+          transform: translateX(-100%);
         }
       }
     }
 
     .dashed {
+      opacity: 0;
       position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
+      top: calc($item_sphere / 2 * -1);
+      left: calc($item_sphere / 2 * -1);
+      right: calc($item_sphere / 2 * -1);
+      bottom: calc($item_sphere / 2 * -1);
       img {
         height: 100%;
         width: 100%;
@@ -360,12 +392,15 @@ body {
 
   &.frame_2 {
     .background .sphere {
-      height: 150px;
-      width: 150px;
+      height: $main_spere * 1.5;
+      width: $main_spere * 1.5;
     }
 
     #canvasOne {
-      transform: translate(-50%, -50%) scale(1.7);
+      width: calc($canvas * 1.5);
+      height: calc($canvas * 1.5);
+      //transform: translate(-50%, -50%) scale(1.7);
+      transform: translate(-50%, -50%);
       filter: hue-rotate(650deg) brightness(1.4);
     }
 
@@ -408,7 +443,7 @@ body {
   &.frame_4 {
     .cloudguard {
 
-      .items {
+      .items, .dashed {
         opacity: 1;
       }
     }
