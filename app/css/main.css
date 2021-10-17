@@ -1,0 +1,326 @@
+:root {
+  --color-black: #000;
+  --color-white: #fff;
+}
+
+html {
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+body {
+  margin: 0;
+}
+
+.anima {
+  background-color: #000;
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+.anima #canvasOne {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  filter: hue-rotate(0deg);
+  transition: transform 0.2s ease;
+}
+.anima .background, .anima .sentinel, .anima .cloudguard {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+}
+.anima .background .sphere {
+  height: 100px;
+  width: 100px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: radial-gradient(50% 50% at 50% 50%, rgba(1, 136, 245, 0) 46.87%, rgba(1, 136, 245, 0.263134) 67.71%, rgba(1, 136, 245, 0.646055) 81.25%, #0188F5 100%);
+}
+.anima .sentinel .elems, .anima .sentinel .elems .logo, .anima .cloudguard .elems, .anima .cloudguard .elems .logo {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+.anima .sentinel .sphere, .anima .cloudguard .sphere {
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.anima .sentinel .sphere p, .anima .cloudguard .sphere p {
+  position: absolute;
+  bottom: -38px;
+  color: #fff;
+  font-weight: 300;
+  font-size: 14px;
+  white-space: nowrap;
+}
+.anima .sentinel .sphere {
+  background: radial-gradient(50% 50% at 50% 50%, rgba(1, 136, 245, 0) 46.87%, rgba(1, 136, 245, 0.263134) 67.71%, rgba(1, 136, 245, 0.646055) 81.25%, #0188F5 100%);
+  height: 60px;
+  width: 60px;
+}
+.anima .sentinel .content {
+  width: 500px;
+  height: 500px;
+  margin: -250px 0 0 -250px;
+}
+.anima .sentinel .content:not(.rotate) {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  margin: 0;
+}
+.anima .sentinel .content .item {
+  position: absolute;
+  height: 60px;
+  width: 60px;
+}
+.anima .sentinel .content .item:nth-child(1) {
+  left: calc(50% - 30px);
+}
+.anima .sentinel .content .item:nth-child(1) p {
+  top: -38px;
+  bottom: auto;
+}
+.anima .sentinel .content .item:nth-child(2) {
+  bottom: 130px;
+  left: 10px;
+}
+.anima .sentinel .content .item:nth-child(3) {
+  bottom: 130px;
+  right: 10px;
+}
+.anima .cloudguard .lines {
+  opacity: 0;
+  transform: scale(0.1);
+  transition: transform 0.4s ease;
+  -webkit-transition: transform 0.4s ease;
+}
+.anima .cloudguard .elems .logo, .anima .cloudguard .content {
+  opacity: 0;
+  visibility: hidden;
+}
+.anima .cloudguard .shine {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  opacity: 0;
+  background: radial-gradient(74.45% 74.45% at 50% 50%, rgba(0, 191, 191, 0.33) 0%, rgba(0, 191, 191, 0) 64.65%);
+}
+.anima .cloudguard .content {
+  height: 905px;
+  width: 905px;
+  position: absolute;
+  left: calc(50% - 452.5px);
+  top: calc(50% - 452.5px);
+}
+.anima .background .sphere {
+  transition: all 0.2s ease-in-out;
+  -webkit-transition: all 0.2s ease-in-out;
+  filter: none;
+}
+.anima .sentinel .elems .logo, .anima .sentinel .content {
+  transition: all 0.2s ease;
+  -webkit-transition: all 0.2s ease;
+}
+.anima .sentinel .lines {
+  transition: transform 0.4s, opacity 1.5s ease;
+  -webkit-transition: transform 0.4s, opacity 1.5s ease;
+}
+.anima .cloudguard .elems .logo, .anima .cloudguard .content {
+  transition: all 0.4s ease;
+  -webkit-transition: all 0.4s ease;
+}
+.anima .cloudguard .shine {
+  transition: all 0.4s ease;
+  -webkit-transition: all 0.4s ease;
+}
+.anima .cloudguard .stripes {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  padding: 0;
+  margin: -5px 0 0 0;
+  list-style: none;
+  color: #fff;
+  width: 705px;
+  transform: translate(-50%, -50%);
+  transition: all 0.4s ease;
+  -webkit-transition: all 0.4s ease;
+}
+.anima .cloudguard .stripes li {
+  position: absolute;
+  width: 100%;
+  transform-origin: center;
+}
+.anima .cloudguard .stripes li p {
+  margin: 0;
+  position: absolute;
+  top: -30px;
+  opacity: 0;
+  transition: opacity 0.2s ease 0.4s;
+  -webkit-transition: opacity 0.2s ease 0.4s;
+}
+.anima .cloudguard .stripes li .bar {
+  height: 10px;
+  width: 210px;
+  position: relative;
+}
+.anima .cloudguard .stripes li .bar .progress {
+  display: block;
+  height: 100%;
+  width: 0%;
+  position: absolute;
+  right: 0;
+  transition: width 0.4s ease;
+  -webkit-transition: width 0.4s ease;
+  box-shadow: 0px 0px 24px #00BFBF;
+}
+.anima .cloudguard .stripes li:nth-child(1) {
+  transform: rotate(30deg);
+}
+.anima .cloudguard .stripes li:nth-child(1) .progress {
+  background-color: #11FFC3;
+}
+.anima .cloudguard .stripes li:nth-child(2) {
+  transform: rotate(150deg);
+}
+.anima .cloudguard .stripes li:nth-child(2) .progress {
+  background-color: #54FFFF;
+}
+.anima .cloudguard .stripes li:nth-child(3) {
+  transform: rotate(270deg);
+}
+.anima .cloudguard .stripes li:nth-child(3) .progress {
+  background-color: #11FFE3;
+}
+.anima .cloudguard .items {
+  opacity: 0;
+  position: absolute;
+  top: calc(50% - 45px);
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  transition: all 0.4s ease;
+  -webkit-transition: all 0.4s ease;
+}
+.anima .cloudguard .items .item {
+  position: absolute;
+  width: 100%;
+}
+.anima .cloudguard .items .item:nth-child(1) {
+  transform: rotate(90deg);
+}
+.anima .cloudguard .items .item:nth-child(2) {
+  transform: rotate(210deg);
+}
+.anima .cloudguard .items .item:nth-child(3) {
+  transform: rotate(330deg);
+}
+.anima .cloudguard .items .item .sphere {
+  background: radial-gradient(50% 50% at 50% 50%, rgba(0, 191, 191, 0) 12.5%, #00BFBF 99.48%);
+  width: 90px;
+  height: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.anima .cloudguard .dashed {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+.anima .cloudguard .dashed img {
+  height: 100%;
+  width: 100%;
+  -o-object-fit: contain;
+  object-fit: contain;
+}
+.anima.frame_1 .background .sphere {
+  background: radial-gradient(50% 50% at 50% 50%, rgba(0, 191, 191, 0) 46.87%, rgba(0, 191, 191, 0.263134) 67.71%, rgba(0, 191, 191, 0.646055) 83.85%, #00BFBF 100%);
+}
+.anima.frame_1 .sentinel .elems .lines {
+  transform: scale(0.1);
+  opacity: 0;
+}
+.anima.frame_1 .sentinel .elems .logo, .anima.frame_1 .sentinel .content {
+  opacity: 0;
+  visibility: hidden;
+}
+.anima.frame_2 .background .sphere {
+  height: 150px;
+  width: 150px;
+}
+.anima.frame_2 #canvasOne {
+  transform: translate(-50%, -50%) scale(1.7);
+  filter: hue-rotate(650deg) brightness(1.4);
+}
+.anima.frame_2 .cloudguard .elems .lines {
+  transform: scale(1);
+  opacity: 1;
+}
+.anima.frame_2 .cloudguard .elems .logo, .anima.frame_2 .cloudguard .content {
+  opacity: 1;
+  visibility: visible;
+}
+.anima.frame_2 .cloudguard .shine {
+  opacity: 1;
+}
+.anima.frame_3 .cloudguard .content {
+  -webkit-animation: spin 600s linear infinite;
+  animation: spin 600s linear infinite;
+  -webkit-animation-delay: 0.6s;
+  animation-delay: 0.6s;
+}
+.anima.frame_3 .cloudguard .stripes .bar .progress {
+  width: 100%;
+}
+.anima.frame_3 .cloudguard .stripes p {
+  opacity: 1;
+}
+.anima.frame_4 .cloudguard .items {
+  opacity: 1;
+}
+@-webkit-keyframes spin {
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes spin-reverse {
+  100% {
+    -webkit-transform: rotate(-360deg);
+  }
+}
+@keyframes spin-reverse {
+  100% {
+    transform: rotate(-360deg);
+  }
+}
+/*# sourceMappingURL=main.css.map */
