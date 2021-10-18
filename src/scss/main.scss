@@ -51,6 +51,14 @@ $item_sphere_small: 60px;
   position: relative;
   overflow: hidden;
 
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  font-synthesis: none;
+  -moz-font-feature-settings: 'kern';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
   #canvasOne {
     position: absolute;
     left: 50%;
@@ -81,6 +89,33 @@ $item_sphere_small: 60px;
     transform: translate(-50%, -50%);
     border-radius: 50%;
     background: radial-gradient(50% 50% at 50% 50%, rgba(1, 136, 245, 0) 46.87%, rgba(1, 136, 245, 0.263134) 67.71%, rgba(1, 136, 245, 0.646055) 81.25%, #0188F5 100%);
+  }
+
+  .container {
+    position: relative;
+    height: 100%;
+    max-width: 1224px;
+    padding: 0 20px;
+    margin: 0 auto;
+    opacity: 1;
+
+
+    .text {
+      color: #fff;
+      max-width: 220px;
+
+
+      h3 {
+        font-weight: 700;
+        text-transform: uppercase;
+        font-size: 12px;
+      }
+
+      p {
+        font-weight: 300;
+        font-size: 12px;
+      }
+    }
   }
 
   .sentinel, .cloudguard {
@@ -128,6 +163,11 @@ $item_sphere_small: 60px;
       top: calc(50% - $content_size / 2);
     }
 
+    .container div[class^="step"] {
+      opacity: 0;
+      visibility: hidden;
+    }
+
   }
 
   // general END
@@ -143,6 +183,17 @@ $item_sphere_small: 60px;
       height: $item_sphere_small;
       width: $item_sphere_small;
       margin-left: 20%;
+    }
+
+    .shine {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      height: 50%;
+      width: 50%;
+      transform: translate(-50%,-50%);
+      background: radial-gradient(74.45% 74.45% at 50% 50%, rgba(1, 136, 245, 0.33) 0%, rgba(1, 136, 245, 0) 62.37%);
+      opacity: 1;
     }
 
     .items {
@@ -185,6 +236,16 @@ $item_sphere_small: 60px;
       }
     }
 
+    .container {
+      .text {
+        position: absolute;
+
+        &:nth-child(1) {
+          top: 30%;
+          right: 0;
+        }
+      }
+    }
   }
 
 
@@ -222,6 +283,11 @@ $item_sphere_small: 60px;
   }
 
   // transitions
+
+  .container, div[class^="step"] {
+    transition: all .2s ease;
+    -webkit-transition: all .2s ease;
+  }
 
   .sentinel {
     .elems .logo, .content {
@@ -366,6 +432,49 @@ $item_sphere_small: 60px;
         object-fit: contain;
       }
     }
+
+    .container {
+      div[class^="step"] .text {
+        position: absolute;
+      }
+
+      .step_1 {
+        .text:nth-child(1) {
+          top: 30%;
+          right: 0;
+        }
+      }
+
+      .step_2 {
+        .text:nth-child(1) {
+          top: 30%;
+          left: 0;
+        }
+        .text:nth-child(2) {
+          top: 30%;
+          right: 0;
+        }
+        .text:nth-child(3) {
+          bottom: 0;
+          left: 30%;
+        }
+      }
+
+      .step_3 {
+        .text:nth-child(1) {
+          top: 0;
+          left: 10%;
+        }
+        .text:nth-child(2) {
+          bottom: 20%;
+          right: 0;
+        }
+        .text:nth-child(3) {
+          bottom: 30%;
+          left: 0;
+        }
+      }
+    }
   }
 
   // transitions END
@@ -383,7 +492,7 @@ $item_sphere_small: 60px;
         opacity: 0;
       }
 
-      .elems .logo, .content {
+      .elems .logo, .content, .container, .shine {
         opacity: 0;
         visibility: hidden;
       }
@@ -418,13 +527,18 @@ $item_sphere_small: 60px;
       .shine {
         opacity: 1;
       }
+
+      .container .step_1 {
+        opacity: 1;
+        visibility: visible;
+      }
     }
   }
 
   &.frame_3 {
     .cloudguard {
       .content {
-        @include rotate(600s);
+        @include rotate(300s);
         animation-delay: .6s;
       }
 
@@ -437,6 +551,17 @@ $item_sphere_small: 60px;
           opacity: 1;
         }
       }
+
+      .container {
+        .step_1 {
+          opacity: 0;
+          visibility: hidden;
+        }
+      }
+      .container .step_2 {
+        opacity: 1;
+        visibility: visible;
+      }
     }
   }
 
@@ -445,6 +570,17 @@ $item_sphere_small: 60px;
 
       .items, .dashed {
         opacity: 1;
+      }
+
+      .container {
+        .step_1, .step_2 {
+          opacity: 0;
+          visibility: hidden;
+        }
+      }
+      .container .step_3 {
+        opacity: 1;
+        visibility: visible;
       }
     }
   }

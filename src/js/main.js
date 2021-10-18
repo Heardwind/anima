@@ -316,6 +316,30 @@ function canvasApp(sphereRad = 180, color = [70,255,140]) {
 }
 
 
+function getPoints() {
+    const container = document.querySelector('.container');
+
+    const canvas = document.createElement('canvas');
+    // canvas.classList.add('path');
+    // canvas.setAttribute('width', container.offsetWidth);
+    // canvas.setAttribute('height', container.offsetHeight);
+    const ctx = canvas.getContext('2d');
+
+    ctx.beginPath();
+    ctx.strokeStyle = '#ffffff';
+    ctx.lineWidth= 1;
+    ctx.setLineDash([5, 15]);
+    ctx.moveTo(30, 50);
+    ctx.lineTo(550, 300);
+    ctx.stroke();
+
+    console.log(container)
+    container.appendChild(canvas);
+    // if(elems.length) {
+    //     Array.from(elems).map()
+    // }
+}
+
 
 class Anima {
 
