@@ -102,6 +102,7 @@ function canvasApp(sphereRad = 180, color = [70,255,140]) {
         turnAngle = 0; //initial angle
 
         timer = setInterval(onTimer, 10/24);
+
     }
 
     function onTimer() {
@@ -313,6 +314,9 @@ function canvasApp(sphereRad = 180, color = [70,255,140]) {
         }
     }
 
+    return function changeColor (color = [r,g,b]) {
+        rgbString = "rgba("+color[0]+","+color[1]+","+color[2]+",";
+    }
 }
 
 
@@ -350,7 +354,7 @@ class Anima {
         this.delay = 2000;
         this.lastAnimation = 0;
         this.setup ();
-        canvasApp(160, [1,136,245]);
+        this.changeColor = canvasApp(160, [1,136,245]);
     }
 
     handleScroll = (e) => {
@@ -399,6 +403,7 @@ class Anima {
                 this.element.classList.add('frame_1');
                 setTimeout(() => {
                     this.element.classList.add('frame_2');
+                    this.changeColor([70, 240, 157]);
                 },1000);
                 break;
             case 3:

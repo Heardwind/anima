@@ -37,12 +37,11 @@ $content_size: calc(100vh - 200px);
 $elem_size: calc(100vh - 200px);
 $elem_size_small: calc(100vh - 300px);
 
-$canvas: 250px;
-$main_spere: 100px;
+$canvas: 35vh;
+$main_sphere: 100px;
 $item_sphere: 90px;
 $item_sphere_small: 60px;
 // sizes
-
 
 
 .anima {
@@ -81,8 +80,8 @@ $item_sphere_small: 60px;
   }
 
   .background .sphere {
-    height: $main_spere;
-    width: $main_spere;
+    height: $main_sphere;
+    width: $main_sphere;
     position: absolute;
     left: 50%;
     top: 50%;
@@ -102,7 +101,8 @@ $item_sphere_small: 60px;
 
     .text {
       color: #fff;
-      max-width: 220px;
+      max-width: 260px;
+      padding: 20px;
 
 
       h3 {
@@ -501,8 +501,8 @@ $item_sphere_small: 60px;
 
   &.frame_2 {
     .background .sphere {
-      height: $main_spere * 1.5;
-      width: $main_spere * 1.5;
+      height: $main_sphere * 1.5;
+      width: $main_sphere * 1.5;
     }
 
     #canvasOne {
@@ -510,7 +510,7 @@ $item_sphere_small: 60px;
       height: calc($canvas * 1.5);
       //transform: translate(-50%, -50%) scale(1.7);
       transform: translate(-50%, -50%);
-      filter: hue-rotate(650deg) brightness(1.4);
+      //filter: hue-rotate(650deg) brightness(1.4);
     }
 
     .cloudguard {
