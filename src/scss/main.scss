@@ -112,6 +112,26 @@ $item_sphere_small: 60px;
         font-weight: 300;
         font-size: 12px;
       }
+
+      .dot {
+        position: absolute;
+        left: 15px;
+        top: 15px;
+        height: 10px;
+        width: 10px;
+        border-radius: 50%;
+        border: 1px solid #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        span {
+          width: 6px;
+          height: 6px;
+          background-color: #fff;
+          border-radius: 50%;
+        }
+      }
     }
   }
 
@@ -178,7 +198,6 @@ $item_sphere_small: 60px;
 
   }
 
-
   .navigation {
     padding: 0;
     list-style: none;
@@ -207,6 +226,37 @@ $item_sphere_small: 60px;
     }
   }
 
+  .path {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    line {
+      opacity: 0;
+
+      &:before {
+        content: '';
+        position: absolute;
+        display: block;
+        width: 10px;
+        height: 10px;
+        left: 0;
+        background: url('./img/start_dot.svg') no-repeat center;
+        background-size: contain;
+      }
+    }
+
+    .path_frame_1 {
+      opacity: 1;
+    }
+  }
+
+
+
   // general END
 
   .sentinel {
@@ -228,7 +278,6 @@ $item_sphere_small: 60px;
       //  animation: random-way 8s ease-in-out infinite;
       //}
     }
-
 
     .shine {
       position: absolute;
@@ -561,6 +610,10 @@ $item_sphere_small: 60px;
         visibility: hidden;
       }
     }
+
+    .path .path_frame_1 {
+      opacity: 0;
+    }
   }
 
   &.frame_2 {
@@ -597,6 +650,10 @@ $item_sphere_small: 60px;
         opacity: 1;
         visibility: visible;
       }
+    }
+
+    .path .path_frame_2 {
+      opacity: 1;
     }
   }
 
@@ -638,6 +695,15 @@ $item_sphere_small: 60px;
         visibility: visible;
       }
     }
+
+    .path {
+      .path_frame_2 {
+        opacity: 0;
+      }
+      .path_frame_3 {
+        opacity: 1;
+      }
+    }
   }
 
   &.frame_4 {
@@ -660,6 +726,15 @@ $item_sphere_small: 60px;
       .container .step_3 {
         opacity: 1;
         visibility: visible;
+      }
+    }
+
+    .path {
+      .path_frame_3 {
+        opacity: 0;
+      }
+      .path_frame_4 {
+        opacity: 1;
       }
     }
   }

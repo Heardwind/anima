@@ -320,35 +320,15 @@ function canvasApp(sphereRad = 180, color = [70,255,140]) {
 }
 
 
-function getPoints() {
-    const container = document.querySelector('.container');
 
-    const canvas = document.createElement('canvas');
-    // canvas.classList.add('path');
-    // canvas.setAttribute('width', container.offsetWidth);
-    // canvas.setAttribute('height', container.offsetHeight);
-    const ctx = canvas.getContext('2d');
-
-    ctx.beginPath();
-    ctx.strokeStyle = '#ffffff';
-    ctx.lineWidth= 1;
-    ctx.setLineDash([5, 15]);
-    ctx.moveTo(30, 50);
-    ctx.lineTo(550, 300);
-    ctx.stroke();
-
-    console.log(container)
-    container.appendChild(canvas);
-    // if(elems.length) {
-    //     Array.from(elems).map()
-    // }
-}
 
 
 class Anima {
 
     constructor(classParent) {
         this.element = document.querySelector(classParent);
+        this.sentinelElement = document.querySelector('.sentinel');
+        this.cloudguardElement = document.querySelector('.cloudguard');
         this.navigationItems = this.element.querySelectorAll('.navigation li');
         this.steps = 4;
         this.step = 1;
@@ -356,6 +336,8 @@ class Anima {
         this.lastAnimation = 0;
         this.setup ();
         this.changeColor = canvasApp(160, [1,136,245]);
+        this.renderStaticPath(this.sentinelElement);
+
     }
 
     handleScroll = (e) => {
@@ -396,13 +378,91 @@ class Anima {
         document.addEventListener('touchend', this.handleScroll, {passive: false} )
     }
 
+    getCoords(elem,centered = false) {
+        let domRect = elem.getBoundingClientRect(),
+            x = centered ? domRect.x + (domRect.width / 2) : domRect.x + 20,
+            y = centered ? domRect.y + (domRect.height / 2) : domRect.y + 20;
+        return [x,y];
+    }
+
+    renderStaticPath(parentElem) {
+
+        let bindElems1 = parentElem.querySelectorAll('[data-bind]');
+        let bindElems2 = Array.from(bindElems1).map(elem => parentElem.querySelector(elem.dataset.bind));
+
+        if(bindElems1.length && bindElems2.length) {
+            const viewPort = document.createElementNS('http://www.w3.org/2000/svg','svg');
+            const viewBox = `0 0 ${parentElem.offsetWidth} ${parentElem.offsetHeight}`;
+            viewPort.classList.add('path');
+            viewPort.setAttribute('viewBox',viewBox);
+
+            let coords1 = Array.from(bindElems1).map(elem => this.getCoords(elem));
+            let coords2 = Array.from(bindElems2).map(elem => this.getCoords(elem,true));
+            const total = bindElems1.length;
+            const pathArr = [];
+
+            Array.from(Array(total).keys()).forEach((count,index) => {
+                let path = document.createElementNS('http://www.w3.org/2000/svg','line');
+                path.setAttribute('x1', coords1[index][0]);
+                path.setAttribute('y1', coords1[index][1]);
+                path.setAttribute('x2', coords2[index][0]);
+                path.setAttribute('y2', coords2[index][1]);
+                path.setAttribute('stroke', 'white');
+                path.setAttribute('stroke-opacity', '0.3');
+                path.setAttribute('stroke-dasharray', '2 2');
+                if(bindElems1[index].dataset.frame) path.classList.add(`path_frame_${bindElems1[index].dataset.frame}`);
+                viewPort.appendChild(path)
+                pathArr.push(path);
+            })
+
+            parentElem.appendChild(viewPort);
+
+            // add dot
+
+            bindElems1.forEach(elem => {
+                let dot = document.createElement('div');
+                dot.classList.add('dot');
+                let dotSpan = document.createElement('span');
+                dot.appendChild(dotSpan)
+                elem.appendChild(dot);
+            });
+
+            return {
+                lines: pathArr,
+                elems1: bindElems1,
+                elems2: bindElems2,
+            };
+
+        }
+
+        return null;
+
+    }
+
+    renderDynamicPath(parentElem) {
+        const data = this.renderStaticPath(parentElem);
+
+        if(data) {
+            setInterval(() => {
+                let coords1 = Array.from(data.elems1).map(elem => this.getCoords(elem));
+                let coords2 = Array.from(data.elems2).map(elem => this.getCoords(elem,true));
+                data.lines.forEach((path,index) => {
+                    path.setAttribute('x1', coords1[index][0]);
+                    path.setAttribute('y1', coords1[index][1]);
+                    path.setAttribute('x2', coords2[index][0]);
+                    path.setAttribute('y2', coords2[index][1]);
+                });
+            },100);
+        }
+    }
+
     delayI(ms) {
         return new Promise(resolve => setTimeout(resolve, ms));
     }
 
-    toggleClass ($class) {
+    rotateHandler (elemClass = '.cloudguard .content') {
         let duration = 90000;
-        let rotateElem = this.element.querySelector('.cloudguard .content');
+        let rotateElem = this.element.querySelector(elemClass);
         let rotateReverse = false,
             styleValue;
 
@@ -429,10 +489,11 @@ class Anima {
                 this.changeColor([70, 240, 157]);
                 setTimeout(() => {
                     this.element.classList.add('frame_2');
+                    this.renderDynamicPath(this.cloudguardElement);
                 },1000);
                 break;
             case 3:
-                this.toggleClass('rotate_reverse');
+                this.rotateHandler();
                 this.element.classList.add('frame_3');
                 break;
             case 4:
