@@ -11,9 +11,6 @@
 }
 
 @mixin rotate-reverse($rotate_duration) {
-  position: absolute;
-  top: 50%;
-  left: 50%;
   -webkit-animation:spin-reverse $rotate_duration linear infinite;
   -moz-animation:spin-reverse $rotate_duration linear infinite;
   animation:spin-reverse $rotate_duration linear infinite;
@@ -79,7 +76,7 @@ $item_sphere_small: 60px;
     width: 100%;
   }
 
-  .background .sphere {
+  .main_sphere {
     height: $main_sphere;
     width: $main_sphere;
     position: absolute;
@@ -87,7 +84,7 @@ $item_sphere_small: 60px;
     top: 50%;
     transform: translate(-50%, -50%);
     border-radius: 50%;
-    background: radial-gradient(50% 50% at 50% 50%, rgba(1, 136, 245, 0) 46.87%, rgba(1, 136, 245, 0.263134) 67.71%, rgba(1, 136, 245, 0.646055) 81.25%, #0188F5 100%);
+    background: radial-gradient(50% 50% at 50% 50%, rgba(1, 136, 245, 0.263134) 0%, rgba(1, 136, 245, 0.646055) 81.25%, #0188F5 100%);
   }
 
   .container {
@@ -138,8 +135,7 @@ $item_sphere_small: 60px;
       transform: translate(-50%, -50%);
     }
 
-    .sphere {
-      border-radius: 50%;
+    .sphere_wrap {
       display: flex;
       align-items: center;
       justify-content: center;
@@ -153,7 +149,19 @@ $item_sphere_small: 60px;
         font-size: 14px;
         white-space: nowrap;
       }
+
+      .sphere {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        border-radius: 50%;
+        height: 100%;
+        width: 100%;
+      }
     }
+
 
     .content {
       height: $content_size;
@@ -170,6 +178,35 @@ $item_sphere_small: 60px;
 
   }
 
+
+  .navigation {
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    right: 5%;
+    top: 50%;
+    transform: translateY(-50%);
+
+    span {
+      display: block;
+      height: 8px;
+      width: 8px;
+      border-radius: 50%;
+      background-color: #1B1E20;
+      transition: background-color .4s ease;
+    }
+
+    li {
+      margin-bottom: 12px;
+
+      &.active span {
+        background-color: #00ACAC;
+      }
+    }
+  }
+
   // general END
 
   .sentinel {
@@ -178,12 +215,20 @@ $item_sphere_small: 60px;
       width: $elem_size_small;
     }
 
-    .sphere {
-      background: radial-gradient(50% 50% at 50% 50%, rgba(1, 136, 245, 0) 46.87%, rgba(1, 136, 245, 0.263134) 67.71%, rgba(1, 136, 245, 0.646055) 81.25%, #0188F5 100%);
+    .sphere_wrap {
+      margin-left: 20%;
       height: $item_sphere_small;
       width: $item_sphere_small;
-      margin-left: 20%;
+
+      .sphere {
+        background: radial-gradient(50% 50% at 50% 50%, rgba(1, 136, 245, 0) 21.69%, rgba(1, 136, 245, 0.646055) 83.85%, #0188F5 100%), rgba(1, 136, 245, 0.2);
+      }
+
+      //.sphere, img {
+      //  animation: random-way 8s ease-in-out infinite;
+      //}
     }
+
 
     .shine {
       position: absolute;
@@ -210,7 +255,7 @@ $item_sphere_small: 60px;
         &:nth-child(1) {
           transform: rotate(90deg);
 
-          .sphere {
+          .sphere_wrap {
             transform: rotate(-90deg);
           }
 
@@ -222,14 +267,14 @@ $item_sphere_small: 60px;
         &:nth-child(2) {
           transform: rotate(210deg);
 
-          .sphere {
+          .sphere_wrap {
             transform: rotate(-210deg);
           }
         }
         &:nth-child(3) {
           transform: rotate(330deg);
 
-          .sphere {
+          .sphere_wrap {
             transform: rotate(-330deg);
           }
         }
@@ -276,7 +321,7 @@ $item_sphere_small: 60px;
 
   // commons
 
-  .background .sphere {
+  .main_sphere {
     transition: all .2s ease-in-out;
     -webkit-transition: all .2s ease-in-out;
     filter: none;
@@ -368,6 +413,12 @@ $item_sphere_small: 60px;
         &:nth-child(2) {
           transform: rotate(150deg);
 
+          p {
+            bottom: -30px;
+            top: auto;
+            transform: rotate(180deg);
+          }
+
           .progress {
             background-color: #54FFFF;
           }
@@ -399,23 +450,39 @@ $item_sphere_small: 60px;
 
         &:nth-child(1) {
           transform: rotate(90deg);
+
+          img {
+            transform: rotate(-90deg);
+          }
         }
         &:nth-child(2) {
           transform: rotate(210deg);
+
+          img {
+            transform: rotate(-210deg);
+          }
         }
         &:nth-child(3) {
           transform: rotate(330deg);
+
+          img {
+            transform: rotate(-330deg);
+          }
         }
 
-        .sphere {
-          background: radial-gradient(50% 50% at 50% 50%, rgba(0, 191, 191, 0) 12.5%, #00BFBF 99.48%);
+        .sphere_wrap {
           width: $item_sphere;
           height: $item_sphere;
           display: flex;
           align-items: center;
           justify-content: center;
           transform: translateX(-100%);
+
+          .sphere {
+            background: radial-gradient(50% 50% at 50% 50%, rgba(0, 191, 191, 0) 12.5%, #00BFBF 99.48%);
+          }
         }
+
       }
     }
 
@@ -426,6 +493,7 @@ $item_sphere_small: 60px;
       left: calc($item_sphere / 2 * -1);
       right: calc($item_sphere / 2 * -1);
       bottom: calc($item_sphere / 2 * -1);
+
       img {
         height: 100%;
         width: 100%;
@@ -481,10 +549,6 @@ $item_sphere_small: 60px;
 
 
   &.frame_1 {
-    .background .sphere {
-      //filter: hue-rotate(680deg) brightness(1.4);
-      background: radial-gradient(50% 50% at 50% 50%, rgba(0, 191, 191, 0) 46.87%, rgba(0, 191, 191, 0.263134) 67.71%, rgba(0, 191, 191, 0.646055) 83.85%, #00BFBF 100%);
-    }
 
     .sentinel{
       .elems .lines {
@@ -500,7 +564,8 @@ $item_sphere_small: 60px;
   }
 
   &.frame_2 {
-    .background .sphere {
+    .main_sphere {
+      background: radial-gradient(50% 50% at 50% 50%, rgba(0, 191, 191, 0) 46.87%, rgba(0, 191, 191, 0.263134) 67.71%, rgba(0, 191, 191, 0.646055) 83.85%, #00BFBF 100%);
       height: $main_sphere * 1.5;
       width: $main_sphere * 1.5;
     }
@@ -535,11 +600,21 @@ $item_sphere_small: 60px;
     }
   }
 
+  $rotate_duration: 90s;
+  $rotate_deg: calc(360deg / 6);
+
   &.frame_3 {
+    //&.rotate_reverse .cloudguard .content {
+    //  transform: rotate($rotate_deg);
+    //  @include rotate-reverse($rotate_duration);
+    //}
+
     .cloudguard {
       .content {
-        @include rotate(300s);
-        animation-delay: .6s;
+        transform: rotate($rotate_deg);
+        //@include rotate($rotate_duration);
+        //animation-delay: .6s;
+        transition: all $rotate_duration linear;
       }
 
       .stripes {
@@ -567,6 +642,10 @@ $item_sphere_small: 60px;
 
   &.frame_4 {
     .cloudguard {
+
+      .content {
+        z-index: 1;
+      }
 
       .items, .dashed {
         opacity: 1;
@@ -599,5 +678,35 @@ $item_sphere_small: 60px;
 @-moz-keyframes spin-reverse { 100% { -moz-transform: rotate(-360deg); } }
 @-webkit-keyframes spin-reverse { 100% { -webkit-transform: rotate(-360deg); } }
 @keyframes spin-reverse { 100% { -webkit-transform: rotate(-360deg); transform:rotate(-360deg); } }
+
+
+@keyframes random-way {
+  100% {
+    transform: translate(0, 0);
+  }
+  85% {
+    transform: translate(0, 0);
+  }
+  70% {
+    transform: translate(0, 0);
+  }
+  55% {
+    transform: translate(0, 0);
+  }
+  40% {
+    transform: translate(0, 0);
+  }
+  25% {
+    transform: translate(0, 0);
+  }
+  15% {
+    transform: translate(5px, 0);
+  }
+  0% {
+    transform: translate(0, 0);
+    //animation-timing-function: ease-in;
+  }
+}
+
 
 // animations END

@@ -349,6 +349,7 @@ class Anima {
 
     constructor(classParent) {
         this.element = document.querySelector(classParent);
+        this.navigationItems = this.element.querySelectorAll('.navigation li');
         this.steps = 4;
         this.step = 1;
         this.delay = 2000;
@@ -395,24 +396,50 @@ class Anima {
         document.addEventListener('touchend', this.handleScroll, {passive: false} )
     }
 
+    delayI(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    toggleClass ($class) {
+        let duration = 90000;
+        let rotateElem = this.element.querySelector('.cloudguard .content');
+        let rotateReverse = false,
+            styleValue;
+
+        setInterval(() => {
+            styleValue = rotateReverse ? 'rotate(60deg)' : 'rotate(-60deg)'
+            rotateElem.style.transform = styleValue;
+            rotateReverse = !rotateReverse;
+        },duration);
+    }
+
+    setNavItem(step) {
+        if(this.navigationItems.length) {
+            this.navigationItems[step-1].classList.remove('active');
+            this.navigationItems[step].classList.add('active');
+        }
+    }
+
     upd() {
         switch (this.step) {
             case 1:
                 break;
             case 2:
                 this.element.classList.add('frame_1');
+                this.changeColor([70, 240, 157]);
                 setTimeout(() => {
                     this.element.classList.add('frame_2');
-                    this.changeColor([70, 240, 157]);
                 },1000);
                 break;
             case 3:
+                this.toggleClass('rotate_reverse');
                 this.element.classList.add('frame_3');
                 break;
             case 4:
                 this.element.classList.add('frame_4');
                 break;
         }
+        this.setNavItem(this.step-1);
     }
 
 }
