@@ -334,6 +334,7 @@ class Anima {
         this.step = 1;
         this.delay = 2000;
         this.lastAnimation = 0;
+        this.parenElemCoords = this.elemDocCoords(this.element);
         this.setup ();
         this.changeColor = canvasApp(160, [1,136,245]);
         this.renderStaticPath(this.sentinelElement);
@@ -372,16 +373,46 @@ class Anima {
         //     console.log('scroll')
         //     console.log(e)
         // } );
-        document.addEventListener('wheel', this.handleScroll, {passive: false} )
-        document.addEventListener('touchmove', this.handleScroll, {passive: false} )
-        document.addEventListener('touchstart', this.handleScroll, {passive: false} )
-        document.addEventListener('touchend', this.handleScroll, {passive: false} )
+        this.element.addEventListener('wheel', this.handleScroll, {passive: false} )
+        this.element.addEventListener('touchmove', this.handleScroll, {passive: false} )
+        this.element.addEventListener('touchstart', this.handleScroll, {passive: false} )
+        this.element.addEventListener('touchend', this.handleScroll, {passive: false} )
+    }
+
+    removeEventListeners() {
+        this.element.removeEventListener('wheel', this.handleScroll, {passive: false} )
+        this.element.removeEventListener('touchmove', this.handleScroll, {passive: false} )
+        this.element.removeEventListener('touchstart', this.handleScroll, {passive: false} )
+        this.element.removeEventListener('touchend', this.handleScroll, {passive: false} )
+    }
+
+    elemDocCoords(elem) {
+        let box = elem.getBoundingClientRect();
+
+        let body = document.body;
+        let docEl = document.documentElement;
+
+        let scrollTop = window.pageYOffset || docEl.scrollTop || body.scrollTop;
+        let scrollLeft = window.pageXOffset || docEl.scrollLeft || body.scrollLeft;
+
+        let clientTop = docEl.clientTop || body.clientTop || 0;
+        let clientLeft = docEl.clientLeft || body.clientLeft || 0;
+
+        let top = box.top + scrollTop - clientTop;
+        let left = box.left + scrollLeft - clientLeft;
+
+        return {
+            top: Math.round(top),
+            left: Math.round(left)
+        };
     }
 
     getCoords(elem,centered = false) {
+        let compensation = this.parenElemCoords.top - window.pageYOffset;
         let domRect = elem.getBoundingClientRect(),
             x = centered ? domRect.x + (domRect.width / 2) : domRect.x + 20,
-            y = centered ? domRect.y + (domRect.height / 2) : domRect.y + 20;
+            y = centered ? domRect.y + (domRect.height / 2) - compensation : domRect.y + 20 - compensation;
+
         return [x,y];
     }
 
@@ -498,6 +529,7 @@ class Anima {
                 break;
             case 4:
                 this.element.classList.add('frame_4');
+                this.removeEventListeners();
                 break;
         }
         this.setNavItem(this.step-1);
