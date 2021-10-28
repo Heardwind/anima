@@ -356,6 +356,12 @@ class Anima {
 
         } else {
             // Down
+            if(this.step===1) {
+                window.scrollTo({
+                    top: this.parenElemCoords.top,
+                    behavior: "smooth"
+                });
+            }
             this.step = this.step === this.steps ? this.steps : ++this.step;
         }
 

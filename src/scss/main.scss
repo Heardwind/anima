@@ -16,6 +16,10 @@
   animation:spin-reverse $rotate_duration linear infinite;
 }
 
+.empty {
+  height: 400px;
+}
+
 html {
   box-sizing: border-box;
 }
@@ -274,6 +278,15 @@ $item_sphere_small: 60px;
       //.sphere, img {
       //  animation: random-way 8s ease-in-out infinite;
       //}
+
+      & > div {
+        animation: Orbita2 15s linear infinite;
+        height: 100%;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
     }
 
     .shine {
@@ -288,11 +301,11 @@ $item_sphere_small: 60px;
     }
 
     .items {
-        position: absolute;
-        top: calc(50% - $item_sphere_small / 2);
-        left: 50%;
-        transform: translate(-50%,-50%);
-        width: 100%;
+      position: absolute;
+      top: calc(50% - $item_sphere_small / 2);
+      left: 50%;
+      transform: translate(-50%,-50%);
+      width: 100%;
 
       .item {
         position: absolute;
@@ -916,6 +929,10 @@ $item_sphere_small: 60px;
 @-webkit-keyframes spin-reverse { 100% { -webkit-transform: rotate(-360deg); } }
 @keyframes spin-reverse { 100% { -webkit-transform: rotate(-360deg); transform:rotate(-360deg); } }
 
+@keyframes Orbita2 {
+  from { transform: rotate(180deg) translateX(20%) rotate(-180deg); }
+  to   { transform: rotate(540deg) translateX(20%) rotate(-540deg); }
+}
 
 @keyframes random-way {
   100% {
